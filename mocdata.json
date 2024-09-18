@@ -1,0 +1,62 @@
+[
+  {
+    "id":1,
+    "nameGallery": "เจ้าบทบาท",
+    "typeGallery": "วรรณกรรม",
+    "startDateShow": "2024-09-02T05:19:10.882Z",
+    "endDateShow": "2024-09-02T05:19:10.882Z",
+    "status": "แสดง",
+    "image": [
+      {
+        "src": "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
+        "alt": "Image 1"
+      },
+      {
+        "src": "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
+        "alt": "Image 2"
+      }
+    ],
+    "detail": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    "nameArtis": "test Aka"
+  },
+  {
+    "id":2,
+    "nameGallery": "ภาพวาดต้นไม้",
+    "typeGallery": "ศิลปกรรม",
+    "startDateShow": "2024-09-02T05:19:10.882Z",
+    "endDateShow": "2024-09-02T05:19:10.882Z",
+    "status": "แสดง",
+    "image": [
+      {
+        "src": "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
+        "alt": "Image 1"
+      },
+      {
+        "src": "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
+        "alt": "Image 2"
+      }
+    ],
+    "detail": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    "nameArtis": "test Aka"
+  },
+  {
+    "id":3,
+    "nameGallery": "การ์ตูนเด็กน้อย",
+    "typeGallery": "ภาพยนตร์",
+    "startDateShow": "2024-09-02T05:19:10.882Z",
+    "endDateShow": "2024-09-02T05:19:10.882Z",
+    "status": "ไม่แสดง",
+    "image": [
+      {
+        "src": "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
+        "alt": "Image 1"
+      },
+      {
+        "src": "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
+        "alt": "Image 2"
+      }
+    ],
+    "detail": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    "nameArtis": "test Aka"
+  }
+]
