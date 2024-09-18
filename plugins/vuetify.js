@@ -9,6 +9,7 @@ export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
     components: {
       VDateInput,
+      
     },
   })
   app.vueApp.use(vuetify)

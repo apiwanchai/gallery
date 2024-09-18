@@ -4,7 +4,7 @@
 </script>
 
 <template>
-  <v-app id="inspire">
+  <v-app id="inspire" >
     <v-app-bar>
       <v-app-bar-title>Gallery</v-app-bar-title>
     </v-app-bar>
@@ -16,3 +16,7 @@
     <Footer class="pa-0"></Footer>
   </v-app>
 </template>
+
+<style>
+
+</style>

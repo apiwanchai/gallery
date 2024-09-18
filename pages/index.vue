@@ -74,7 +74,9 @@ const editDetail = (item) => {
 </script>
 <template>
   <v-container>
-    <v-row class="mt-5">
+    <h2 class="mt-5">รายการผลงาน</h2>
+    <v-row class="">
+      
       <v-col cols="6" class="d-flex justify-space-between align-center ga-3">
         <v-text-field
           v-model="search"
