@@ -158,7 +158,7 @@ onMounted(() => {
               </v-radio-group>
             </v-col>
 
-            <v-col cols="3" sm="3">
+            <v-col cols="12" sm="3">
               <v-date-input
                 label="วันที่เริ่ม"
                 v-model="startDate"
@@ -168,7 +168,7 @@ onMounted(() => {
               ></v-date-input>
             </v-col>
 
-            <v-col cols="3" sm="3">
+            <v-col cols="12" sm="3">
               <v-date-input
                 label="วันที่สิ้นสุด"
                 v-model="endDate"
