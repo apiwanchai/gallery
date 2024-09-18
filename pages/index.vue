@@ -1,7 +1,6 @@
 <script setup>
 import mocData from "../mocdata.json";
 
-
 const search = ref("");
 const selected = ref([]);
 const page = ref(1);
@@ -10,8 +9,9 @@ const itemsPerPage = ref(5);
 const router = useRouter();
 const allItems = ref([...mocData]);
 
-
-const totalPages = computed(() => Math.ceil(allItems.value.length / itemsPerPage.value));
+const totalPages = computed(() =>
+  Math.ceil(allItems.value.length / itemsPerPage.value)
+);
 
 const goToDetail = (item) => {
   router.push({
@@ -55,12 +55,12 @@ const searchItems = () => {
   });
 
   allItems.value = filtered;
-  page.value = 1; 
+  page.value = 1;
 };
 
 const resetSearch = () => {
   search.value = "";
-  allItems.value = [...mocData]; 
+  allItems.value = [...mocData];
   page.value = 1;
 };
 
@@ -72,7 +72,7 @@ const deleteSelected = () => {
 
     allItems.value = updatedItems;
     selected.value = [];
-    page.value = 1; 
+    page.value = 1;
   } else {
     console.log("ไม่มีรายการที่ถูกเลือกสำหรับการลบ");
   }
@@ -97,7 +97,7 @@ const editDetail = (item) => {
           class="mt-4"
           variant="outlined"
           elevation="0"
-           @keydown.enter="searchItems"
+          @keydown.enter="searchItems"
         ></v-text-field>
 
         <v-icon @click="searchItems">mdi-magnify</v-icon>
@@ -194,11 +194,10 @@ const editDetail = (item) => {
   </v-container>
 </template>
 
-
 <style scoped>
 .icon-container {
   display: flex;
-  gap: 10px; 
+  gap: 10px;
 }
 
 .tooltip-wrapper {
@@ -215,13 +214,11 @@ const editDetail = (item) => {
   padding: 5px;
   border-radius: 5px;
 
-
   position: absolute;
   bottom: 125%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
-  
 
   opacity: 0;
   transition: opacity 0.3s;

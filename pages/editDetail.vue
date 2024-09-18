@@ -1,4 +1,3 @@
-
 <script setup>
 import { useRoute, useRouter } from "vue-router";
 import mocData from "../mocdata.json";
