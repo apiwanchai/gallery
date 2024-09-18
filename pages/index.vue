@@ -4,15 +4,14 @@ import mocData from "../mocdata.json";
 
 const search = ref("");
 const selected = ref([]);
-const page = ref(1); 
+const page = ref(1);
 const itemsPerPage = ref(5);
 
 const router = useRouter();
 const allItems = ref([...mocData]);
 
 
-const totalItems = allItems.value.length;
-const totalPages = computed(() => Math.ceil(totalItems / itemsPerPage.value));
+const totalPages = computed(() => Math.ceil(allItems.value.length / itemsPerPage.value));
 
 const goToDetail = (item) => {
   router.push({
@@ -20,7 +19,6 @@ const goToDetail = (item) => {
     query: { id: item.id },
   });
 };
-
 
 const paginatedItems = computed(() => {
   const start = (page.value - 1) * itemsPerPage.value;
@@ -49,13 +47,13 @@ const headers = ref([
 
 const searchItems = () => {
   const query = search.value.toLowerCase();
-  const filtered = allItems.value.filter((item) => {
+  const filtered = mocData.filter((item) => {
     return (
       item.nameGallery.toLowerCase().includes(query) ||
       item.typeGallery.toLowerCase().includes(query)
     );
   });
- 
+
   allItems.value = filtered;
   page.value = 1; 
 };
@@ -63,7 +61,7 @@ const searchItems = () => {
 const resetSearch = () => {
   search.value = "";
   allItems.value = [...mocData]; 
-  page.value = 1; 
+  page.value = 1;
 };
 
 const deleteSelected = () => {
@@ -74,6 +72,7 @@ const deleteSelected = () => {
 
     allItems.value = updatedItems;
     selected.value = [];
+    page.value = 1; 
   } else {
     console.log("ไม่มีรายการที่ถูกเลือกสำหรับการลบ");
   }
@@ -98,6 +97,7 @@ const editDetail = (item) => {
           class="mt-4"
           variant="outlined"
           elevation="0"
+           @keydown.enter="searchItems"
         ></v-text-field>
 
         <v-icon @click="searchItems">mdi-magnify</v-icon>
@@ -169,7 +169,6 @@ const editDetail = (item) => {
           </template>
         </v-data-table>
 
-    
         <v-row class="d-flex align-center mt-4">
           <v-col cols="2">
             <v-select
@@ -182,7 +181,6 @@ const editDetail = (item) => {
             ></v-select>
           </v-col>
 
-        
           <v-pagination
             v-model="page"
             :length="totalPages"
@@ -195,6 +193,7 @@ const editDetail = (item) => {
     </v-row>
   </v-container>
 </template>
+
 
 <style scoped>
 .icon-container {
