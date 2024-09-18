@@ -1,10 +1,18 @@
 <script setup>
 import mocData from "../mocdata.json";
+
+
 const search = ref("");
 const selected = ref([]);
+const page = ref(1); 
+const itemsPerPage = ref(5);
 
 const router = useRouter();
 const allItems = ref([...mocData]);
+
+
+const totalItems = allItems.value.length;
+const totalPages = computed(() => Math.ceil(totalItems / itemsPerPage.value));
 
 const goToDetail = (item) => {
   router.push({
@@ -13,7 +21,12 @@ const goToDetail = (item) => {
   });
 };
 
-const filteredItems = ref([...allItems.value]);
+
+const paginatedItems = computed(() => {
+  const start = (page.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return allItems.value.slice(start, end);
+});
 
 const formatDate = (isoDateString) => {
   const date = new Date(isoDateString);
@@ -36,17 +49,21 @@ const headers = ref([
 
 const searchItems = () => {
   const query = search.value.toLowerCase();
-  filteredItems.value = allItems.value.filter((item) => {
+  const filtered = allItems.value.filter((item) => {
     return (
       item.nameGallery.toLowerCase().includes(query) ||
       item.typeGallery.toLowerCase().includes(query)
     );
   });
+ 
+  allItems.value = filtered;
+  page.value = 1; 
 };
 
 const resetSearch = () => {
   search.value = "";
-  filteredItems.value = [...allItems.value];
+  allItems.value = [...mocData]; 
+  page.value = 1; 
 };
 
 const deleteSelected = () => {
@@ -56,9 +73,6 @@ const deleteSelected = () => {
     );
 
     allItems.value = updatedItems;
-
-    filteredItems.value = [...updatedItems];
-
     selected.value = [];
   } else {
     console.log("ไม่มีรายการที่ถูกเลือกสำหรับการลบ");
@@ -72,11 +86,11 @@ const editDetail = (item) => {
   });
 };
 </script>
+
 <template>
   <v-container>
     <h2 class="mt-5">รายการผลงาน</h2>
-    <v-row class="">
-      
+    <v-row>
       <v-col cols="6" class="d-flex justify-space-between align-center ga-3">
         <v-text-field
           v-model="search"
@@ -105,52 +119,117 @@ const editDetail = (item) => {
       <v-col cols="12">
         <v-data-table
           :headers="headers"
-          :items="filteredItems"
+          :items="paginatedItems"
           item-value="id"
           show-select
           v-model="selected"
           class="elevation-1"
-          :items-per-page="5"
-          :footer-props="{
-            'items-per-page-options': { value: 5, title: '5' },
-          }"
+          :items-per-page="itemsPerPage"
+          hide-default-footer
         >
           <template v-slot:item.status="{ item }">
-            <v-chip :color="item.status === 'แสดง' ? 'green' : 'red'"   variant="tonal">
-              <v-icon :icon="item.status === 'แสดง' ? 'mdi-checkbox-marked-outline': 'mdi-alpha-x-box-outline'" start></v-icon>
+            <v-chip
+              :color="item.status === 'แสดง' ? 'green' : 'red'"
+              variant="tonal"
+            >
+              <v-icon
+                :icon="
+                  item.status === 'แสดง'
+                    ? 'mdi-checkbox-marked-outline'
+                    : 'mdi-alpha-x-box-outline'
+                "
+                start
+              ></v-icon>
               {{ item.status }}
             </v-chip>
           </template>
+
           <template v-slot:item.startDateShow="{ item }">
             {{ item.status === "แสดง" ? formatDate(item.startDateShow) : "-" }}
           </template>
+
           <template v-slot:item.endDateShow="{ item }">
             {{ item.status === "แสดง" ? formatDate(item.endDateShow) : "-" }}
           </template>
 
           <template v-slot:item.actions="{ item }">
-            <v-tooltip text="รายละเอียด" location="bottom">
-              <template v-slot:activator="{ props }">
-                <v-icon color="grey" v-bind="props" @click="goToDetail(item)"
-                  >mdi-eye
-                </v-icon>
-              </template>
-            </v-tooltip>
-            
-            <v-tooltip text="แก้ไข" location="bottom">
-              <template v-slot:activator="{ props }">
-                <v-icon  v-bind="props" color="yellow" @click="editDetail(item)">mdi-pencil</v-icon>
-              </template>
-            </v-tooltip>
+            <div class="icon-container">
+              <div class="tooltip-wrapper">
+                <v-icon color="grey" @click="goToDetail(item)">mdi-eye</v-icon>
+                <span class="tooltip-text">รายละเอียด</span>
+              </div>
 
-           
+              <div class="tooltip-wrapper">
+                <v-icon color="yellow" @click="editDetail(item)"
+                  >mdi-pencil</v-icon
+                >
+                <span class="tooltip-text">แก้ไข</span>
+              </div>
+            </div>
           </template>
         </v-data-table>
+
+    
+        <v-row class="d-flex align-center mt-4">
+          <v-col cols="2">
+            <v-select
+              v-model="itemsPerPage"
+              :items="[5, 10, 15]"
+              label="Page Size"
+              hide-details
+              variant="outlined"
+              style="width: 100px"
+            ></v-select>
+          </v-col>
+
+        
+          <v-pagination
+            v-model="page"
+            :length="totalPages"
+            total-visible="1"
+            show-first-last-page
+            class="ml-auto"
+          ></v-pagination>
+        </v-row>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
+<style scoped>
+.icon-container {
+  display: flex;
+  gap: 10px; 
+}
+
+.tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  width: 80px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
 
 
-<style scoped></style>
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  
+
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip-wrapper:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
